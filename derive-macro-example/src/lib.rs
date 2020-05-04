@@ -6,7 +6,7 @@ use syn::*;
 pub fn derive_debug(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
     if let Data::Struct(s) = &input.data {
-        let field_types: Vec<_> = s.fields.iter().map(|field| &field.ty).collect();
+        let field_types = s.fields.iter().map(|field| &field.ty);
         let struct_name = &input.ident;
         let (impl_generics, ty_generics, where_clause) = input.generics.split_for_impl();
         let where_clause = if let Some(where_clause) = where_clause {
