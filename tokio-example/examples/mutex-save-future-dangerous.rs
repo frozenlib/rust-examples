@@ -7,7 +7,7 @@ use tokio::{
 
 #[tokio::main]
 async fn main() {
-    let m = Arc::new(Mutex::new(()));
+    let m = Arc::pin(Mutex::new(()));
 
     let m1 = m.clone();
     let h1 = spawn(async move {
@@ -24,7 +24,7 @@ async fn main() {
     h2.await.unwrap();
 }
 struct DangerousMutexFuture {
-    mutex: Arc<Mutex<()>>,
+    mutex: Pin<Arc<Mutex<()>>>,
 
     // 正しいライフタイムを表現できないため、仕方なくstaticライフタイムを使っている
     // これがUBを引き起こさないか心配
@@ -39,7 +39,7 @@ impl Drop for DangerousMutexFuture {
 }
 
 impl DangerousMutexFuture {
-    fn new(mutex: Arc<Mutex<()>>) -> Self {
+    fn new(mutex: Pin<Arc<Mutex<()>>>) -> Self {
         Self { mutex, fut: None }
     }
 }
