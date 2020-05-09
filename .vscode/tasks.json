@@ -5,6 +5,32 @@
     "tasks": [
         {
             "type": "shell",
+            "label": "cargo build example",
+            "command": "cargo",
+            "args": [
+                "build",
+                "--example",
+                "${fileBasenameNoExtension}",
+            ],
+            "problemMatcher": [
+                "$rustc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "panel": "dedicated",
+                "clear": true,
+            },
+            // "options": {
+            //     "env": {
+            //         "RUST_BACKTRACE": "1",
+            //     }
+            // }
+        },
+        {
+            "type": "shell",
             "label": "cargo run exmaple",
             "command": "cargo",
             "args": [
@@ -19,10 +45,10 @@
                 "panel": "dedicated",
                 "clear": true,
             },
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
+            // "group": {
+            //     "kind": "build",
+            //     "isDefault": true
+            // },
         },
     ]
 }
