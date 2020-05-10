@@ -56,7 +56,7 @@ impl Future for DangerousMutexFuture {
             }
         }
         match fut.as_mut().unwrap().as_mut().poll(cx) {
-            Poll::Ready(_) => {
+            Poll::Ready(_guard) => {
                 fut.take();
                 println!("ready");
                 Poll::Ready(())
