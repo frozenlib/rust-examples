@@ -1,4 +1,6 @@
-fn main() {}
+fn main() {
+    let x = GenericField::new();
+}
 
 struct GenericField<I> {
     iter: I,
@@ -12,9 +14,12 @@ impl<I: Iterator<Item = u8>> GenericField<I> {
     }
 }
 
-// 引数と戻り値からimpl<I>のIが確定できない場合（今後変更される可能性があるも含む）は関連関数ではなく、普通の関数として実装
-fn new() -> GenericField<impl Iterator<Item = u8>> {
-    GenericField {
-        iter: std::iter::empty(),
+struct Dummy;
+
+impl GenericField<Dummy> {
+    fn new() -> GenericField<impl Iterator<Item = u8>> {
+        GenericField {
+            iter: std::iter::empty(),
+        }
     }
 }
