@@ -1,6 +1,7 @@
 [workspace]
 members = [
     "derive-macro-example",
-    "tokio-example"
+    "tokio-example",
+    "example-model",
 ]
 
