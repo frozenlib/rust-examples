@@ -1,4 +1,4 @@
-// Force the user to call `MustCloseFile::close` so that errors that occur when dropping a File are not ignored.
+// Force the user to call `MustCloseFile::close` so that errors that occur when dropping `File` are not ignored.
 
 use std::{
     fs::File,
