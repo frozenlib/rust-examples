@@ -8,14 +8,14 @@ use std::{
 };
 
 fn main() {
-    MustCloseFile::open_with("file.txt", |mut file| {
+    MustCloseFile::create_with("file.txt", |mut file| {
         file.write_all(&[1, 2, 3])?;
         file.close()
     })
     .expect("write failed.");
 
     /*
-    MustCloseFile::open_with("file.txt", |mut file| {
+    MustCloseFile::create_with("file.txt", |mut file| {
         file.write_all(&[1, 2, 3])?;
         Ok(()) // Compilation error because IO errors may be ignored by auto-drop
     })
@@ -26,11 +26,11 @@ fn main() {
 pub struct MustCloseFile(File);
 
 impl MustCloseFile {
-    pub fn open_with(
+    pub fn create_with(
         path: impl AsRef<Path>,
         f: impl FnOnce(Self) -> Result<ClosedFile>,
     ) -> Result<()> {
-        f(MustCloseFile(File::open(path)?))?;
+        f(MustCloseFile(File::create(path)?))?;
         Ok(())
     }
     pub fn close(self) -> Result<ClosedFile> {
