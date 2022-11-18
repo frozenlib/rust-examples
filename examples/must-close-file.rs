@@ -26,15 +26,16 @@ fn main() {
 pub struct MustCloseFile(File);
 
 impl MustCloseFile {
-    pub fn open_with<T>(
+    pub fn open_with(
         path: impl AsRef<Path>,
-        f: impl FnOnce(Self) -> Result<ClosedFile<T>>,
-    ) -> Result<T> {
-        Ok(f(MustCloseFile(File::open(path)?))?.0)
+        f: impl FnOnce(Self) -> Result<ClosedFile>,
+    ) -> Result<()> {
+        f(MustCloseFile(File::open(path)?))?;
+        Ok(())
     }
     pub fn close(self) -> Result<ClosedFile> {
         self.0.sync_all()?;
-        Ok(ClosedFile(()))
+        Ok(ClosedFile {})
     }
 }
 
@@ -49,5 +50,6 @@ impl DerefMut for MustCloseFile {
         &mut self.0
     }
 }
+
 #[non_exhaustive]
-pub struct ClosedFile<T = ()>(T);
+pub struct ClosedFile {}
