@@ -1,7 +1,8 @@
-[workspace]
-members = [
-    "derive-macro-example",
-    "tokio-example",
-    "example-model",
-]
+[package]
+name = "rust-examples"
+version = "0.1.0"
+authors = ["frozenlib <frozenlib@users.noreply.github.com>"]
+edition = "2021"
 
+[workspace]
+members = ["derive-macro-example", "tokio-example", "example-model"]
